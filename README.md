@@ -88,45 +88,150 @@ Used for timing checks and debugging.
 1. **Add the CSS** (before `</head>`):
 
 ```html
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/mikhailvol/webfolks-honeypot@latest/wf-datepicker.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/mikhailvol/webfolks-honeypot@latest/wf-anty-spammer.css">
 ```
 
 2. **Add the JS** (right before `</body>`):
 
 ```html
-<script defer src="https://cdn.jsdelivr.net/gh/mikhailvol/webfolks-honeypot@latest/wf-datepicker.js"></script>
+<script defer src="https://cdn.jsdelivr.net/gh/mikhailvol/webfolks-honeypot@latest/wf-anty-spammer.js"></script>
 ```
 > The script automatically protects **all Webflow forms** inside `.w-form`.
 
 ---
 
-## Configuration
+# Configuration & Customization (Optional)
 
-At the top of the script you can tune:
+This customization layer is **optional**.
+If you are happy with the defaults, you do **not** need to add anything.
+
+---
+
+## Default Behavior (No Configuration Needed)
+
+If you load the script like this:
+
+```html
+<script src="https://cdn.jsdelivr.net/gh/..."></script>
+```
+
+Then:
+
+- The script uses its internal defaults
+- No global variables are required
+- No extra setup is needed
+- All Webflow forms are protected automatically
+
+This is the **recommended setup for most projects**.
+
+---
+
+## Optional: Per-Project Configuration Overrides
+
+If you want to **change behavior for a specific project**, you can override selected settings using a small config object.
+
+### How it works
+
+The script internally merges configuration like this:
 
 ```js
-const CFG = {
-  hpName: "company_site",
+CFG = { ...DEFAULT_CFG, ...window.WF_ANTISPAM_CFG }
+```
 
-  minSubmitMs: 2500,
-  maxSubmitMs: 2 * 60 * 60 * 1000,
+This means:
+- Only the keys you provide are overridden
+- All other values fall back to defaults
 
-  requireHumanSignal: true,
+---
 
-  throttleMs: 15000,
+## How to Add Custom Configuration
 
-  debug: false,
-  showWebflowFail: true
+### 1) Add this snippet **before** the main script
+
+```html
+<script>
+  window.WF_ANTISPAM_CFG = {
+    minSubmitMs: 1500,
+    requireHumanSignal: false
+  };
+</script>
+
+<script src="https://cdn.jsdelivr.net/gh/..."></script>
+```
+
+⚠️ The config block **must be placed before** the script include.
+
+---
+
+## Available Configuration Options
+
+| Option | Type | Description | Default |
+|-----|-----|------------|--------|
+| `hpName` | string | Honeypot input name | `company_site` |
+| `minSubmitMs` | number | Minimum allowed time before submit | `2500` |
+| `maxSubmitMs` | number | Maximum allowed form age | `7200000` |
+| `requireHumanSignal` | boolean | Require mouse/scroll/key interaction | `true` |
+| `throttleMs` | number | Cooldown between submits (ms) | `15000` |
+| `debug` | boolean | Enable console logging | `false` |
+| `showWebflowFail` | boolean | Show `.w-form-fail` when blocked | `true` |
+
+---
+
+## Common Customization Examples
+
+### Newsletter Forms (fast submits)
+```js
+window.WF_ANTISPAM_CFG = {
+  minSubmitMs: 1500,
+  requireHumanSignal: false
 };
 ```
 
-### Recommended values
+### Accessibility-first Sites
+```js
+window.WF_ANTISPAM_CFG = {
+  requireHumanSignal: false
+};
+```
 
-| Form type | minSubmitMs | requireHumanSignal |
-|---------|-------------|--------------------|
-| Contact / Demo | 2500 | true |
-| Newsletter | 1500 | false |
-| Accessibility-first | 2000 | false |
+### Debugging a Live Site
+```js
+window.WF_ANTISPAM_CFG = {
+  debug: true
+};
+```
+
+---
+
+## What Happens If Configuration Is Missing
+
+If `window.WF_ANTISPAM_CFG` is not defined:
+
+- No errors occur
+- Defaults are used
+- Script behaves exactly the same
+
+This makes configuration **safe, optional, and non-breaking**.
+
+---
+
+## What This Customization Does NOT Do
+
+- ❌ Does not change script loading or caching
+- ❌ Does not version the script
+- ❌ Does not expose public APIs
+- ❌ Does not affect other projects
+
+It only adjusts runtime behavior on the current page.
+
+---
+
+## Best Practice Summary
+
+- Use **defaults** whenever possible
+- Override config **only when necessary**
+- Keep config small and project-specific
+- Do not define `window.WF_ANTISPAM_CFG` unless you need it
 
 ---
 

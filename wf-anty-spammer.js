@@ -1,5 +1,7 @@
+// MIT License | © 2025 Mykhailo Voloshyn, WebFolks.io
+
 (function () {
-  const CFG = {
+  const DEFAULT_CFG = {
     // Honeypot name (weird = less autofill)
     hpName: "company_site",
 
@@ -20,6 +22,9 @@
     debug: false,           // set true to see console logs
     showWebflowFail: true   // show .w-form-fail when blocked
   };
+
+  // Allow per-site overrides (must be defined BEFORE loading this script)
+  const CFG = Object.assign({}, DEFAULT_CFG, window.WF_ANTISPAM_CFG || {});
 
   function log(...args) {
     if (CFG.debug) console.log("[wf-antispam]", ...args);
@@ -95,9 +100,13 @@
     const humanEvents = ["mousemove", "touchstart", "keydown", "scroll", "pointerdown"];
     const onHuman = () => { hadHumanSignal = true; cleanupHuman(); };
     function cleanupHuman() {
-      humanEvents.forEach(e => window.removeEventListener(e, onHuman, { passive: true }));
+      humanEvents.forEach(e =>
+        window.removeEventListener(e, onHuman, { passive: true })
+      );
     }
-    humanEvents.forEach(e => window.addEventListener(e, onHuman, { passive: true }));
+    humanEvents.forEach(e =>
+      window.addEventListener(e, onHuman, { passive: true })
+    );
 
     form.addEventListener("submit", function (e) {
       const now = Date.now();

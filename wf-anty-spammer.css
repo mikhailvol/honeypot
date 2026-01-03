@@ -1,4 +1,6 @@
-.wf-antispam-hp-wrap{
+/*! MIT License | © 2025 Mykhailo Voloshyn, WebFolks.io */
+
+.wf-antispam-hp-wrap {
     position:absolute!important;
     left:-10000px!important;
     top:auto!important;
