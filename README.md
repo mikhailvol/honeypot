@@ -83,29 +83,19 @@ Used for timing checks and debugging.
 
 ---
 
-## Installation
+## 🚀 Installation (Webflow)
 
-### 1) Add CSS (Project Settings → Custom Code → Head)
+1. **Add the CSS** (before `</head>`):
 
 ```html
-<style>
-  .wf-antispam-hp-wrap{
-    position:absolute!important;
-    left:-10000px!important;
-    top:auto!important;
-    width:1px!important;
-    height:1px!important;
-    overflow:hidden!important;
-  }
-</style>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/mikhailvol/webfolks-honeypot@latest/wf-datepicker.css">
 ```
 
----
+2. **Add the JS** (right before `</body>`):
 
-### 2) Add JavaScript (Project Settings → Custom Code → Footer)
-
-Paste the anti-spam script before `</body>`.
-
+```html
+<script defer src="https://cdn.jsdelivr.net/gh/mikhailvol/webfolks-honeypot@latest/wf-datepicker.js"></script>
+```
 > The script automatically protects **all Webflow forms** inside `.w-form`.
 
 ---
@@ -263,6 +253,6 @@ UI does **not** need to change for most upgrades.
 
 ---
 
-## License
+## 📝 License
 
-MIT – use freely in client and commercial projects.
+[MIT](LICENSE.md)
