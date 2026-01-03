@@ -88,13 +88,13 @@ Used for timing checks and debugging.
 1. **Add the CSS** (before `</head>`):
 
 ```html
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/mikhailvol/webfolks-honeypot@latest/wf-anty-spammer.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/mikhailvol/webfolks-anty-spammer@latest/wf-anty-spammer.css">
 ```
 
 2. **Add the JS** (right before `</body>`):
 
 ```html
-<script defer src="https://cdn.jsdelivr.net/gh/mikhailvol/webfolks-honeypot@latest/wf-anty-spammer.js"></script>
+<script defer src="https://cdn.jsdelivr.net/gh/mikhailvol/webfolks-anty-spammer@latest/wf-anty-spammer.js"></script>
 ```
 > The script automatically protects **all Webflow forms** inside `.w-form`.
 
